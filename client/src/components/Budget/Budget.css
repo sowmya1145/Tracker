@@ -1,0 +1,81 @@
+.budget-planner-container {
+  display: flex;
+}
+
+.budget-content {
+  flex-grow: 1;
+  padding: 30px;
+  background-color: #f4f6f8;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.title {
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.month-select {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.month-select label {
+  font-weight: 600;
+}
+
+.budget-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.budget-form input {
+  padding: 8px;
+  font-size: 14px;
+  width: 180px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.budget-form button {
+  padding: 8px 16px;
+  font-size: 14px;
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.budget-form button:hover {
+  background-color: #1b5e20;
+}
+
+.budget-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.budget-table th,
+.budget-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.budget-table th {
+  background-color: #2c3e50;
+  color: white;
+  font-weight: 600;
+}
+
+.budget-table tr:last-child td {
+  border-bottom: none;
+}

@@ -1,0 +1,23 @@
+.expense-content {
+  padding: 20px;
+  flex: 1;
+}
+
+.filter-section {
+  margin-bottom: 15px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table th,
+table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
