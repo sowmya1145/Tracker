@@ -22,18 +22,27 @@ const Search = () => {
   const [dateFrom, setDateFrom] = useState("");
   const [dateTo, setDateTo] = useState("");
   const [category, setCategory] = useState("");
+  const [categories, setCategories] = useState([]);
   const [amountMin, setAmountMin] = useState("");
   const [amountMax, setAmountMax] = useState("");
   const [showExportOptions, setShowExportOptions] = useState(false);
+  const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
 
   useEffect(() => {
     fetchTransactions();
   }, []);
 
   const fetchTransactions = async () => {
-    const res = await axios.get("http://localhost:5000/api/transactions");
-    setTransactions(res.data);
-    setFilteredTransactions(res.data);
+    try {
+      const res = await axios.get("http://localhost:5000/api/transactions");
+      setTransactions(res.data);
+      setFilteredTransactions(res.data);
+
+      const uniqueCategories = [...new Set(res.data.map((txn) => txn.category))];
+      setCategories(uniqueCategories);
+    } catch (error) {
+      console.error("Error fetching transactions:", error);
+    }
   };
 
   const handleSearch = () => {
@@ -131,44 +140,73 @@ const Search = () => {
     closeDropdown();
   };
 
+  const filteredCategories = categories.filter((c) =>
+    c.toLowerCase().includes(category.toLowerCase())
+  );
+
   return (
     <div className="transaction-page-container">
       <Sidebar />
       <div className="transaction-content">
         <h2>Search & Filter Transactions</h2>
         <div className="form">
-          <input type="date" value={dateFrom} onChange={(e) => setDateFrom(e.target.value)} />
-          <input type="date" value={dateTo} onChange={(e) => setDateTo(e.target.value)} />
           <input
-            placeholder="Category"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            type="date"
+            value={dateFrom}
+            onChange={(e) => setDateFrom(e.target.value)}
           />
           <input
+            type="date"
+            value={dateTo}
+            onChange={(e) => setDateTo(e.target.value)}
+          />
+
+          <div className="category-dropdown-wrapper">
+            <input
+              type="text"
+              placeholder="Category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+              onFocus={() => setShowCategoryDropdown(true)}
+              onBlur={() => setTimeout(() => setShowCategoryDropdown(false), 150)}
+            />
+            {showCategoryDropdown && filteredCategories.length > 0 && (
+              <ul className="custom-category-dropdown">
+                {filteredCategories.map((cat, idx) => (
+                  <li key={idx} onMouseDown={() => setCategory(cat)}>
+                    {cat}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          <input
             placeholder="Min Amount"
+            type="number"
             value={amountMin}
             onChange={(e) => setAmountMin(e.target.value)}
-            type="number"
           />
           <input
             placeholder="Max Amount"
+            type="number"
             value={amountMax}
             onChange={(e) => setAmountMax(e.target.value)}
-            type="number"
           />
-          <div className="button-container">
-            <button onClick={handleSearch}>Search</button>
-            <button onClick={resetFilters}>Reset</button>
-            <div className="export-dropdown-wrapper">
-              <button onClick={() => setShowExportOptions(!showExportOptions)}>Export ▼</button>
-              {showExportOptions && (
-                <div className="export-options">
-                  <button onClick={exportToPDF}>PDF</button>
-                  <button onClick={exportToWord}>Word</button>
-                  <button onClick={exportToExcel}>Excel</button>
-                </div>
-              )}
-            </div>
+        </div>
+
+        <div className="button-container">
+          <button onClick={handleSearch}>Search</button>
+          <button onClick={resetFilters}>Reset</button>
+          <div className="export-dropdown-wrapper">
+            <button onClick={() => setShowExportOptions(!showExportOptions)}>Export ▼</button>
+            {showExportOptions && (
+              <div className="export-options">
+                <button onClick={exportToPDF}>PDF</button>
+                <button onClick={exportToWord}>Word</button>
+                <button onClick={exportToExcel}>Excel</button>
+              </div>
+            )}
           </div>
         </div>
 
@@ -194,7 +232,10 @@ const Search = () => {
             ))}
           </tbody>
         </table>
-        {filteredTransactions.length === 0 && <p style={{ textAlign: "center" }}>No transactions found.</p>}
+
+        {filteredTransactions.length === 0 && (
+          <p style={{ textAlign: "center" }}>No transactions found.</p>
+        )}
       </div>
     </div>
   );

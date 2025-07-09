@@ -16,39 +16,107 @@ h2 {
 }
 
 .form {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-bottom: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+  margin-bottom: 1.5rem;
+  align-items: end;
 }
 
-.search-input {
-  padding: 8px;
+.form input,
+.category-dropdown-wrapper input {
+  padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  flex: 1;
-  min-width: 140px;
-}
-
-.button-container {
+  border-radius: 6px;
+  font-size: 14px;
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 0.5rem;
+  box-sizing: border-box;
 }
 
-.search-btn {
-  padding: 10px 15px;
-  background-color: #2c3e50;
-  color: white;
-  border: none;
-  border-radius: 4px;
+/* Category Dropdown */
+.category-dropdown-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.custom-category-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 130px;
+  overflow-y: auto;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  z-index: 10;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.custom-category-dropdown li {
+  padding: 8px;
   cursor: pointer;
 }
 
-.search-btn:hover {
+.custom-category-dropdown li:hover {
+  background-color: #f0f0f0;
+}
+
+/* Button Layout */
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.button-container button {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  background-color: #2c3e50;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.button-container button:hover {
   background-color: #34495e;
+}
+
+
+.export-dropdown-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.export-options {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: #2c3e50;
+  border-radius: 4px;
+  min-width: 120px;
+  padding: 4px 0;
+  z-index: 1000;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.export-options button {
+  width: 100%;
+  padding: 8px 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-size: 0.9rem;
+  color: white;
+}
+
+.export-options button:hover {
+  background-color: black;
 }
 
 table {
@@ -70,40 +138,6 @@ th {
 }
 
 p {
-  margin-top: 1rem;
   color: #666;
   text-align: center;
-}
-
-.export-dropdown-wrapper {
-  position: relative;
-  display: inline-block;
-}
-
-.export-options {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background: #2c3e50;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  min-width: 120px;
-  padding: 4px 0;
-  z-index: 1000;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-}
-
-.export-options button {
-  width: 100%;
-  padding: 8px 12px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  text-align: left;
-  font-size: 0.9rem;
-  color: white;
-}
-
-.export-options button:hover {
-  background-color: black;
 }

@@ -26,7 +26,7 @@ const Transaction = () => {
 
   const showNotification = (msg) => {
     setNotification(msg);
-    setTimeout(() => setNotification(""), 4000); // Clear after 4 seconds
+    setTimeout(() => setNotification(""), 4000);
   };
 
   const fetchTransactions = async () => {
@@ -125,9 +125,7 @@ const Transaction = () => {
         <h2>Transaction Manager</h2>
 
         {notification && (
-          <div className="toast-notification">
-            {notification}
-          </div>
+          <div className="toast-notification">{notification}</div>
         )}
 
         {errorMessage && (
@@ -167,7 +165,9 @@ const Transaction = () => {
             onChange={(e) => setNotes(e.target.value)}
           />
 
-          <button onClick={handleSubmit}>{editingId ? "Update" : "Add"} Transaction</button>
+          <button onClick={handleSubmit}>
+            {editingId ? "Update" : "Add"} Transaction
+          </button>
         </div>
 
         <table>
